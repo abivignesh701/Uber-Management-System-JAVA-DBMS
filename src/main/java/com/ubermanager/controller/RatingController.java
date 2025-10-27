@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +60,17 @@ public class RatingController {
     public ResponseEntity<Double> getAverageRatingForDriver(@PathVariable Long driverId) {
         Double avgRating = ratingService.getAverageRatingForDriver(driverId);
         return ResponseEntity.ok(avgRating);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Rating> updateRating(@PathVariable Long id, @Valid @RequestBody Rating rating) {
+        Rating updatedRating = ratingService.updateRating(id, rating);
+        return ResponseEntity.ok(updatedRating);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRating(@PathVariable Long id) {
+        ratingService.deleteRating(id);
+        return ResponseEntity.noContent().build();
     }
 }

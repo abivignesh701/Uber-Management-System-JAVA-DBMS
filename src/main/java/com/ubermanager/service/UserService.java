@@ -44,8 +44,23 @@ public class UserService {
     @Transactional
     public User updateUser(Long id, User userDetails) {
         User user = getUserById(id);
-        user.setName(userDetails.getName());
-        user.setContactNo(userDetails.getContactNo());
+        // Allow updating email as well, but ensure uniqueness when changed
+        String newEmail = userDetails.getEmail();
+        if (newEmail != null && !newEmail.trim().isEmpty() && !newEmail.equals(user.getEmail())) {
+            if (userRepository.existsByEmail(newEmail)) {
+                throw new RuntimeException("User with email " + newEmail + " already exists");
+            }
+            user.setEmail(newEmail);
+        }
+
+        if (userDetails.getName() != null) {
+            user.setName(userDetails.getName());
+        }
+
+        if (userDetails.getContactNo() != null) {
+            user.setContactNo(userDetails.getContactNo());
+        }
+
         return userRepository.save(user);
     }
     

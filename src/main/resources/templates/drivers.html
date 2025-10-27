@@ -235,6 +235,12 @@
         <h1 class="section-title">Driver Management</h1>
         
         <div class="table-container">
+            <div style="margin-bottom: 1rem; text-align: right;">
+                <button class="btn btn-primary" onclick="openAddModal()">
+                    <i class="fas fa-plus"></i> Add New Driver
+                </button>
+            </div>
+            
             <table>
                 <thead>
                     <tr>
@@ -245,6 +251,7 @@
                         <th>Vehicle No</th>
                         <th>Rating</th>
                         <th>Join Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -261,10 +268,171 @@
                             </span>
                         </td>
                         <td th:text="${driver.joinDate}">2024-01-01</td>
+                        <td>
+                            <button class="btn btn-primary" th:onclick="'openEditModal(' + ${driver.driverId} + ')'">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-danger" th:onclick="'deleteDriver(' + ${driver.driverId} + ')'">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <!-- Add Driver Modal -->
+    <div id="addModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 2rem; border-radius: 15px; width: 500px; max-width: 90%;">
+            <h2 style="margin-bottom: 1.5rem; color: #667eea;">Add New Driver</h2>
+            <form id="addForm" onsubmit="addDriver(event)">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Name:</label>
+                    <input type="text" name="name" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email:</label>
+                    <input type="email" name="email" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Contact:</label>
+                    <input type="text" name="contactNo" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Vehicle Number:</label>
+                    <input type="text" name="vehicleNo" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-danger" onclick="closeAddModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Driver</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Driver Modal -->
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 2rem; border-radius: 15px; width: 500px; max-width: 90%;">
+            <h2 style="margin-bottom: 1.5rem; color: #667eea;">Edit Driver</h2>
+            <form id="editForm" onsubmit="updateDriver(event)">
+                <input type="hidden" id="editDriverId">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Name:</label>
+                    <input type="text" id="editName" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email:</label>
+                    <input type="email" id="editEmail" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Contact:</label>
+                    <input type="text" id="editContactNo" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Vehicle Number:</label>
+                    <input type="text" id="editVehicleNo" required style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-danger" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Driver</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openAddModal() {
+            document.getElementById('addModal').style.display = 'flex';
+        }
+
+        function closeAddModal() {
+            document.getElementById('addModal').style.display = 'none';
+            document.getElementById('addForm').reset();
+        }
+
+        function openEditModal(driverId) {
+            fetch(`/api/drivers/${driverId}`)
+                .then(response => response.json())
+                .then(driver => {
+                    document.getElementById('editDriverId').value = driver.driverId;
+                    document.getElementById('editName').value = driver.name;
+                    document.getElementById('editEmail').value = driver.email;
+                    document.getElementById('editContactNo').value = driver.contactNo;
+                    document.getElementById('editVehicleNo').value = driver.vehicleNo;
+                    document.getElementById('editModal').style.display = 'flex';
+                });
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        function addDriver(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const driver = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                contactNo: formData.get('contactNo'),
+                vehicleNo: formData.get('vehicleNo'),
+                ratingAvg: 0.0,
+                joinDate: new Date().toISOString().split('T')[0]
+            };
+
+            fetch('/api/drivers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(driver)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Driver added successfully!');
+                    window.location.reload();
+                } else {
+                    alert('Error adding driver!');
+                }
+            });
+        }
+
+        function updateDriver(event) {
+            event.preventDefault();
+            const driverId = document.getElementById('editDriverId').value;
+            const driver = {
+                name: document.getElementById('editName').value,
+                email: document.getElementById('editEmail').value,
+                contactNo: document.getElementById('editContactNo').value,
+                vehicleNo: document.getElementById('editVehicleNo').value
+            };
+
+            fetch(`/api/drivers/${driverId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(driver)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Driver updated successfully!');
+                    window.location.reload();
+                } else {
+                    alert('Error updating driver!');
+                }
+            });
+        }
+
+        function deleteDriver(driverId) {
+            if (confirm('Are you sure you want to delete this driver?')) {
+                fetch(`/api/drivers/${driverId}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Driver deleted successfully!');
+                            window.location.reload();
+                        } else {
+                            alert('Error deleting driver!');
+                        }
+                    });
+            }
+        }
+    </script>
 </body>
 </html>

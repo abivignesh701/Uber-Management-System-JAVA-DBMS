@@ -72,4 +72,30 @@ public class RatingService {
         Double avg = ratingRepository.getAverageRatingForDriver(driverId);
         return avg != null ? avg : 0.0;
     }
+    
+    @Transactional
+    public Rating updateRating(Long id, Rating rating) {
+        Rating existingRating = getRatingById(id);
+        
+        existingRating.setRating(rating.getRating());
+        existingRating.setReview(rating.getReview());
+        
+        Rating updatedRating = ratingRepository.save(existingRating);
+        
+        // Update driver's average rating
+        driverService.updateDriverRating(existingRating.getDriver().getDriverId());
+        
+        return updatedRating;
+    }
+    
+    @Transactional
+    public void deleteRating(Long id) {
+        Rating rating = getRatingById(id);
+        Long driverId = rating.getDriver().getDriverId();
+        
+        ratingRepository.deleteById(id);
+        
+        // Update driver's average rating after deletion
+        driverService.updateDriverRating(driverId);
+    }
 }
