@@ -51,6 +51,12 @@ public class Driver {
     @Column(name = "rating_avg")
     private Double ratingAvg = 0.0;
     
+    @Column(name = "current_latitude")
+    private Double currentLatitude;
+    
+    @Column(name = "current_longitude")
+    private Double currentLongitude;
+    
     @Column(name = "join_date")
     private LocalDate joinDate;
     
@@ -105,6 +111,12 @@ public class Driver {
     
     public Double getRatingAvg() { return ratingAvg; }
     public void setRatingAvg(Double ratingAvg) { this.ratingAvg = ratingAvg; }
+    
+    public Double getCurrentLatitude() { return currentLatitude; }
+    public void setCurrentLatitude(Double currentLatitude) { this.currentLatitude = currentLatitude; }
+    
+    public Double getCurrentLongitude() { return currentLongitude; }
+    public void setCurrentLongitude(Double currentLongitude) { this.currentLongitude = currentLongitude; }
     
     public LocalDate getJoinDate() { return joinDate; }
     public void setJoinDate(LocalDate joinDate) { this.joinDate = joinDate; }

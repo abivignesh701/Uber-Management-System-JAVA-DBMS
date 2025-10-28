@@ -39,10 +39,13 @@ CREATE TABLE IF NOT EXISTS drivers (
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL DEFAULT 'ROLE_DRIVER',
     rating_avg DOUBLE DEFAULT 0.0,
+    current_latitude DOUBLE,
+    current_longitude DOUBLE,
     join_date DATE,
     INDEX idx_email (email),
     INDEX idx_rating (rating_avg),
-    INDEX idx_join_date (join_date)
+    INDEX idx_join_date (join_date),
+    INDEX idx_location (current_latitude, current_longitude)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- =============================================
