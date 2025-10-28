@@ -1,6 +1,5 @@
 package com.ubermanager.config;
 
-import com.ubermanager.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.ubermanager.security.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -44,6 +45,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Public access
                 .requestMatchers("/", "/login", "/register/**", "/css/**", "/js/**", "/images/**", "/error").permitAll()
+                // Allow unauthenticated creation of users, drivers, rides, payments, and ratings
+                .requestMatchers("/api/users", "/api/drivers", "/api/rides", "/api/payments", "/api/ratings").permitAll()
                 // User-specific routes
                 .requestMatchers("/user/**").hasRole("USER")
                 // Driver-specific routes
