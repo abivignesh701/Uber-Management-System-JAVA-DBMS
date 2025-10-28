@@ -14,31 +14,31 @@ ALTER TABLE rides AUTO_INCREMENT = 1;
 ALTER TABLE payments AUTO_INCREMENT = 1;
 ALTER TABLE ratings AUTO_INCREMENT = 1;
 
--- Insert sample users
-INSERT INTO users (name, email, contact_no, join_date) VALUES
-('John Doe', 'john.doe@example.com', '+91 9876543210', '2024-01-15'),
-('Jane Smith', 'jane.smith@example.com', '+91 9876543211', '2024-01-20'),
-('Robert Johnson', 'robert.j@example.com', '+91 9876543212', '2024-02-01'),
-('Emily Davis', 'emily.d@example.com', '+91 9876543213', '2024-02-10'),
-('Michael Brown', 'michael.b@example.com', '+91 9876543214', '2024-02-15'),
-('Sarah Wilson', 'sarah.wilson@example.com', '+91 9876543215', '2024-03-01'),
-('David Lee', 'david.lee@example.com', '+91 9876543216', '2024-03-05'),
-('Lisa Anderson', 'lisa.anderson@example.com', '+91 9876543217', '2024-03-10'),
-('James Taylor', 'james.taylor@example.com', '+91 9876543218', '2024-03-15'),
-('Maria Garcia', 'maria.garcia@example.com', '+91 9876543219', '2024-03-20');
+-- Insert sample users (password is 'password123' for all - BCrypt hashed)
+INSERT INTO users (name, email, contact_no, password, role, join_date) VALUES
+('John Doe', 'john.doe@example.com', '+91 9876543210', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-01-15'),
+('Jane Smith', 'jane.smith@example.com', '+91 9876543211', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-01-20'),
+('Robert Johnson', 'robert.j@example.com', '+91 9876543212', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-02-01'),
+('Emily Davis', 'emily.d@example.com', '+91 9876543213', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-02-10'),
+('Michael Brown', 'michael.b@example.com', '+91 9876543214', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-02-15'),
+('Sarah Wilson', 'sarah.wilson@example.com', '+91 9876543215', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-03-01'),
+('David Lee', 'david.lee@example.com', '+91 9876543216', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-03-05'),
+('Lisa Anderson', 'lisa.anderson@example.com', '+91 9876543217', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-03-10'),
+('James Taylor', 'james.taylor@example.com', '+91 9876543218', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-03-15'),
+('Maria Garcia', 'maria.garcia@example.com', '+91 9876543219', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_USER', '2024-03-20');
 
--- Insert sample drivers
-INSERT INTO drivers (name, email, contact_no, vehicle_no, rating_avg, join_date) VALUES
-('Rajesh Kumar', 'rajesh.kumar@example.com', '+91 9988776655', 'DL01AB1234', 4.8, '2023-06-01'),
-('Amit Sharma', 'amit.sharma@example.com', '+91 9988776656', 'DL01AB1235', 4.9, '2023-06-15'),
-('Priya Singh', 'priya.singh@example.com', '+91 9988776657', 'DL01AB1236', 4.7, '2023-07-01'),
-('Vijay Verma', 'vijay.verma@example.com', '+91 9988776658', 'DL01AB1237', 4.6, '2023-07-15'),
-('Sanjay Patel', 'sanjay.patel@example.com', '+91 9988776659', 'DL01AB1238', 4.9, '2023-08-01'),
-('Neha Gupta', 'neha.gupta@example.com', '+91 9988776660', 'DL01AB1239', 4.8, '2023-08-15'),
-('Rahul Desai', 'rahul.desai@example.com', '+91 9988776661', 'DL01AB1240', 4.5, '2023-09-01'),
-('Kavita Reddy', 'kavita.reddy@example.com', '+91 9988776662', 'DL01AB1241', 4.7, '2023-09-15'),
-('Suresh Nair', 'suresh.nair@example.com', '+91 9988776663', 'DL01AB1242', 4.9, '2023-10-01'),
-('Anita Joshi', 'anita.joshi@example.com', '+91 9988776664', 'DL01AB1243', 4.8, '2023-10-15');
+-- Insert sample drivers (password is 'password123' for all - BCrypt hashed)
+INSERT INTO drivers (name, email, contact_no, vehicle_no, password, role, rating_avg, join_date) VALUES
+('Rajesh Kumar', 'rajesh.kumar@example.com', '+91 9988776655', 'DL01AB1234', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.8, '2023-06-01'),
+('Amit Sharma', 'amit.sharma@example.com', '+91 9988776656', 'DL01AB1235', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.9, '2023-06-15'),
+('Priya Singh', 'priya.singh@example.com', '+91 9988776657', 'DL01AB1236', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.7, '2023-07-01'),
+('Vijay Verma', 'vijay.verma@example.com', '+91 9988776658', 'DL01AB1237', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.6, '2023-07-15'),
+('Sanjay Patel', 'sanjay.patel@example.com', '+91 9988776659', 'DL01AB1238', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.9, '2023-08-01'),
+('Neha Gupta', 'neha.gupta@example.com', '+91 9988776660', 'DL01AB1239', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.8, '2023-08-15'),
+('Rahul Desai', 'rahul.desai@example.com', '+91 9988776661', 'DL01AB1240', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.5, '2023-09-01'),
+('Kavita Reddy', 'kavita.reddy@example.com', '+91 9988776662', 'DL01AB1241', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.7, '2023-09-15'),
+('Suresh Nair', 'suresh.nair@example.com', '+91 9988776663', 'DL01AB1242', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.9, '2023-10-01'),
+('Anita Joshi', 'anita.joshi@example.com', '+91 9988776664', 'DL01AB1243', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ROLE_DRIVER', 4.8, '2023-10-15');
 
 -- Insert sample rides
 INSERT INTO rides (user_id, driver_id, pickup_location, drop_location, request_time, start_time, end_time, fare, status) VALUES

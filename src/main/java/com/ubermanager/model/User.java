@@ -29,6 +29,12 @@ public class User {
     @Column(name = "contact_no", nullable = false)
     private String contactNo;
     
+    @Column(nullable = false)
+    private String password;
+    
+    @Column(nullable = false)
+    private String role = "ROLE_USER";
+    
     @Column(name = "join_date")
     private LocalDate joinDate;
     
@@ -69,6 +75,12 @@ public class User {
     
     public String getContactNo() { return contactNo; }
     public void setContactNo(String contactNo) { this.contactNo = contactNo; }
+    
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
     
     public LocalDate getJoinDate() { return joinDate; }
     public void setJoinDate(LocalDate joinDate) { this.joinDate = joinDate; }

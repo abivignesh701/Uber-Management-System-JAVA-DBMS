@@ -31,16 +31,8 @@ public class WebController {
     }
     
     @GetMapping("/")
-    public String dashboard(Model model) {
-        model.addAttribute("totalUsers", userService.getTotalUsersCount());
-        model.addAttribute("totalDrivers", driverService.getTotalDriversCount());
-        model.addAttribute("totalRides", rideService.getTotalRidesCount());
-        model.addAttribute("completedRides", rideService.getCompletedRidesCount());
-        model.addAttribute("totalRevenue", rideService.getTotalRevenue());
-        model.addAttribute("users", userService.getAllUsers());
-        model.addAttribute("drivers", driverService.getAllDrivers());
-        model.addAttribute("recentRides", rideService.getAllRides());
-        return "dashboard";
+    public String home() {
+        return "redirect:/login";
     }
     
     @GetMapping("/users")
@@ -71,5 +63,28 @@ public class WebController {
     public String ratings(Model model) {
         model.addAttribute("ratings", ratingService.getAllRatings());
         return "ratings";
+    }
+    
+    @GetMapping("/user/dashboard")
+    public String userDashboard() {
+        return "user-dashboard";
+    }
+    
+    @GetMapping("/driver/dashboard")
+    public String driverDashboard() {
+        return "driver-dashboard";
+    }
+    
+    @GetMapping("/dashboard")
+    public String mainDashboard(Model model) {
+        model.addAttribute("totalUsers", userService.getTotalUsersCount());
+        model.addAttribute("totalDrivers", driverService.getTotalDriversCount());
+        model.addAttribute("totalRides", rideService.getTotalRidesCount());
+        model.addAttribute("completedRides", rideService.getCompletedRidesCount());
+        model.addAttribute("totalRevenue", rideService.getTotalRevenue());
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("drivers", driverService.getAllDrivers());
+        model.addAttribute("recentRides", rideService.getAllRides());
+        return "dashboard";
     }
 }

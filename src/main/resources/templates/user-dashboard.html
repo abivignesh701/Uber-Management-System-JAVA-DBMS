@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - UberManager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-logout {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+            animation-fill-mode: both;
+        }
+
+        .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+        .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+        .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+        .dashboard-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .card-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: #764ba2;
+        }
+
+        .welcome-message {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .welcome-message h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome-message p {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👤 Rider Dashboard</h1>
+            <div class="user-info">
+                <span sec:authentication="principal.name" style="color: #666; font-weight: 600;"></span>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="btn-logout">Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="welcome-message">
+            <h2>Welcome Back, <span sec:authentication="principal.name"></span>! 👋</h2>
+            <p>Manage your rides, view payments, and update your profile from this dashboard.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-icon">🚗</div>
+                <div class="card-title">My Rides</div>
+                <p style="color: #999; margin-top: 10px;">View and manage your ride history</p>
+                <a href="/rides" class="card-link">View Rides →</a>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">💳</div>
+                <div class="card-title">Payments</div>
+                <p style="color: #999; margin-top: 10px;">Check your payment history and methods</p>
+                <a href="/payments" class="card-link">View Payments →</a>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">⭐</div>
+                <div class="card-title">Ratings & Reviews</div>
+                <p style="color: #999; margin-top: 10px;">Rate your drivers and view feedback</p>
+                <a href="/ratings" class="card-link">View Ratings →</a>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">👥</div>
+                <div class="card-title">Profile</div>
+                <p style="color: #999; margin-top: 10px;">Update your personal information</p>
+                <a href="/users" class="card-link">Edit Profile →</a>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div style="text-align: center;">
+                <div class="card-icon">🎯</div>
+                <h3 style="color: #333; margin-bottom: 10px;">Quick Actions</h3>
+                <p style="color: #666; margin-bottom: 20px;">Access all management features</p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <a href="/dashboard" style="padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">Dashboard</a>
+                    <a href="/drivers" style="padding: 10px 20px; background: #764ba2; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">View Drivers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

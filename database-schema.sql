@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     contact_no VARCHAR(20) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL DEFAULT 'ROLE_USER',
     join_date DATE,
     INDEX idx_email (email),
     INDEX idx_join_date (join_date)
@@ -34,6 +36,8 @@ CREATE TABLE IF NOT EXISTS drivers (
     email VARCHAR(100) NOT NULL UNIQUE,
     contact_no VARCHAR(20) NOT NULL,
     vehicle_no VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL DEFAULT 'ROLE_DRIVER',
     rating_avg DOUBLE DEFAULT 0.0,
     join_date DATE,
     INDEX idx_email (email),

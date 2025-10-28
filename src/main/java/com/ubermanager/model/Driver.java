@@ -42,6 +42,12 @@ public class Driver {
     @Column(name = "vehicle_no", nullable = false)
     private String vehicleNo;
     
+    @Column(nullable = false)
+    private String password;
+    
+    @Column(nullable = false)
+    private String role = "ROLE_DRIVER";
+    
     @Column(name = "rating_avg")
     private Double ratingAvg = 0.0;
     
@@ -90,6 +96,12 @@ public class Driver {
     
     public String getVehicleNo() { return vehicleNo; }
     public void setVehicleNo(String vehicleNo) { this.vehicleNo = vehicleNo; }
+    
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+    
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
     
     public Double getRatingAvg() { return ratingAvg; }
     public void setRatingAvg(Double ratingAvg) { this.ratingAvg = ratingAvg; }
